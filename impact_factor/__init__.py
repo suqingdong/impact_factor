@@ -17,7 +17,7 @@ from impact_factor.db.manager import Manager, Factor, FactorVersion
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_DB = os.path.join(BASE_DIR, 'data', 'impact_factor.db')
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __author__ = 'suqingdong'
 __author_email__ = 'suqingdong@novogene.com'
 
