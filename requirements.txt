@@ -1,3 +1,4 @@
-colorama
+bs4
 requests
+colorama
 sqlalchemy
