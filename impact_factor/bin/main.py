@@ -15,6 +15,7 @@ import sys
 import json
 import time
 import datetime
+import argparse
 
 import colorama
 
@@ -30,35 +31,7 @@ from impact_factor import ImpactFactor, DEFAULT_DB, __version__, __epilog__
 colorama.init()
 
 
-def main(**kwargs):
-
-    start_time = time.time()
-
-    IF = ImpactFactor(**kwargs)
-
-    if kwargs['cmd'] == 'version':
-        IF.check_version()
-    elif kwargs['cmd'] == 'search':
-        res = IF.search(kwargs['keyword'], field=kwargs['field'])
-        if res:
-            print(json.dumps(res, indent=2))
-        else:
-            print('no result for keyword: {keyword}'.format(**kwargs))
-    elif kwargs['cmd'] == 'build':
-        if not (kwargs['entrez_file'] and kwargs['medline_file']):
-            print('please supply J_Entrez and J_Medline file!')
-        else:
-            IF.build(kwargs['entrez_file'], kwargs['medline_file'], threads=kwargs['threads'])
-    elif kwargs['cmd'] == 'pubmed_filter':
-        IF.pubmed_filter(indexed=True, **kwargs)
-
-    print('time used: {:.1f}s'.format(time.time() - start_time))
-
-
-if __name__ == '__main__':
-
-    import argparse
-
+def get_args():
     parser = argparse.ArgumentParser(
         description=__doc__,
         prog='impact_factor',
@@ -109,4 +82,35 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    args.func(**vars(args))
+    return args
+    
+
+
+
+
+def main():
+
+    kwargs = get_args()
+    kwargs.func(**vars(kwargs))
+
+    IF = ImpactFactor(**kwargs)
+
+    if kwargs['cmd'] == 'version':
+        IF.check_version()
+    elif kwargs['cmd'] == 'search':
+        res = IF.search(kwargs['keyword'], field=kwargs['field'])
+        if res:
+            print(json.dumps(res, indent=2))
+        else:
+            print('no result for keyword: {keyword}'.format(**kwargs))
+    elif kwargs['cmd'] == 'build':
+        if not (kwargs['entrez_file'] and kwargs['medline_file']):
+            print('please supply J_Entrez and J_Medline file!')
+        else:
+            IF.build(kwargs['entrez_file'], kwargs['medline_file'], threads=kwargs['threads'])
+    elif kwargs['cmd'] == 'pubmed_filter':
+        IF.pubmed_filter(indexed=True, **kwargs)
+
+
+if __name__ == '__main__':
+    main()    
