@@ -16,12 +16,17 @@ setup(
     long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
     long_description_content_type="text/markdown",
     url='https://github.com/suqingdong/impact_factor',
+    project_urls={
+        'Documentation': 'https://impact-factor.readthedocs.io',
+        'Tracker': 'https://github.com/suqingdong/impact_factor/issues',
+    },
     license='BSD License',
     install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().split('\n'),
     packages=find_packages(),
     include_package_data=True,
     entry_points={'console_scripts': [
         'impact_factor = impact_factor.bin.main:main',
+        'IF = impact_factor.bin.main:main',
     ]},
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -32,7 +37,7 @@ setup(
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries'
     ]
 )
