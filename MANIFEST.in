@@ -1,0 +1,3 @@
+include requirements.txt
+recursive-include impact_factor/data/ *
+exclude test
