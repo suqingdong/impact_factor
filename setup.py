@@ -12,7 +12,7 @@ setup(
     version=__version__,
     author=__author__,
     author_email=__author_email__,
-    description='Impact Factor Toolkits',
+    description='Impact Factor Toolkits for Pubmed',
     long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
     long_description_content_type="text/markdown",
     url='https://github.com/suqingdong/impact_factor',
@@ -25,8 +25,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     entry_points={'console_scripts': [
-        'impact_factor = impact_factor.bin.main:main',
-        'IF = impact_factor.bin.main:main',
+        'impact_factor = impact_factor.bin.main:run',
+        'IF = impact_factor.bin.main:run',
     ]},
     classifiers=[
         'Development Status :: 5 - Production/Stable',

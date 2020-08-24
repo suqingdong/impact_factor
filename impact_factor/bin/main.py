@@ -85,10 +85,7 @@ def get_args():
     return args
 
 
-def main():
-
-    kwargs = get_args()
-    kwargs.func(**vars(kwargs))
+def main(**kwargs):
 
     IF = ImpactFactor(**kwargs)
 
@@ -109,5 +106,10 @@ def main():
         IF.pubmed_filter(indexed=True, **kwargs)
 
 
+def run():
+    args = get_args()
+    args.func(**vars(args))
+
+
 if __name__ == '__main__':
-    main()    
+    run()
