@@ -17,7 +17,7 @@ from impact_factor.db.manager import Manager, Factor, FactorVersion
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_DB = os.path.join(BASE_DIR, 'data', 'impact_factor.db')
 
-__version__ = '1.0.3'
+__version__ = '1.0.5'
 __author__ = 'suqingdong'
 __author_email__ = 'suqingdong@novogene.com'
 
@@ -63,6 +63,7 @@ class ImpactFactor(object):
         for key in ('issn', 'e_issn', 'journal', 'med_abbr', 'nlm_id'):
             context = self.manager.query(Factor, key, value, like=like)
             if context:
+                context['factor_history'] = json.loads(context['factor_history'])
                 return context
 
     def pubmed_filter(self, min_value=None, max_value=None, indexed=None, outfile=None, **kwargs):
@@ -72,12 +73,13 @@ class ImpactFactor(object):
         if min_value is not None:
             res = res.filter(Factor.factor >= min_value)
         if max_value is not None:
-            res = res.filter(Factor.factor <= max_value)
+            res = res.filter(Factor.factor < max_value)
 
-        if res.count() > 4000:
-            print('total {n} journals with IF: {min_value} - {max_value} (limit 4000)'.format(n=res.count(), **locals()))
+        issn_list = '|'.join(each.issn or '"{}"[Journal]'.format(each.med_abbr) for each in res)
+
+        if len(issn_list) > 4000:
+            print('total {n} journals with IF: {min_value} - {max_value} (exceed 4000 characters)'.format(n=res.count(), **locals()))
         else:
-            issn_list = '|'.join(each.issn or '"{}"[Journal]'.format(each.med_abbr) for each in res)
             print('{n} journals with IF: {min_value} - {max_value}'.format(n=res.count(), **locals()))
             if outfile:
                 with util.safe_open(outfile, 'w') as out:
