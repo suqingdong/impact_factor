@@ -63,7 +63,8 @@ class ImpactFactor(object):
         for key in ('issn', 'e_issn', 'journal', 'med_abbr', 'nlm_id'):
             context = self.manager.query(Factor, key, value, like=like)
             if context:
-                context['factor_history'] = json.loads(context['factor_history'])
+                factor_history = json.loads(context['factor_history'])
+                context['factor_history'] = {int(k): float(v) for k, v in factor_history.items() if v}
                 return context
 
     def pubmed_filter(self, min_value=None, max_value=None, indexed=None, outfile=None, **kwargs):
