@@ -1,32 +1,34 @@
 # -*- encoding: utf8 -*-
 import os
+import json
+import codecs
 from setuptools import setup, find_packages
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-from impact_factor import __version__, __author__, __author_email__
+version_info = json.load(open(os.path.join(BASE_DIR, 'impact_factor', 'version', 'version.json')))
 
 
 setup(
     name='impact_factor',
-    version=__version__,
-    author=__author__,
-    author_email=__author_email__,
-    description='Impact Factor Toolkits for Pubmed',
-    long_description=open(os.path.join(BASE_DIR, 'README.md')).read(),
+    version=version_info['version'],
+    author=version_info['author'],
+    author_email=version_info['author_email'],
+    description=version_info['desc'],
+    long_description=codecs.open(os.path.join(BASE_DIR, 'README.md'), encoding='utf-8').read(),
     long_description_content_type="text/markdown",
     url='https://github.com/suqingdong/impact_factor',
     project_urls={
-        'Documentation': 'https://impact-factor.readthedocs.io',
+        'Documentation': 'https://impact_factor.readthedocs.io',
         'Tracker': 'https://github.com/suqingdong/impact_factor/issues',
     },
     license='BSD License',
-    install_requires=open(os.path.join(BASE_DIR, 'requirements.txt')).read().split('\n'),
+    install_requires=codecs.open(os.path.join(BASE_DIR, 'requirements.txt'), encoding='utf-8').read().split('\n'),
     packages=find_packages(),
     include_package_data=True,
     entry_points={'console_scripts': [
-        'impact_factor = impact_factor.bin.main:run',
-        'IF = impact_factor.bin.main:run',
+        'IF = impact_factor.bin.cli:main',
+        'impact_factor = impact_factor.bin.cli:main',
     ]},
     classifiers=[
         'Development Status :: 5 - Production/Stable',

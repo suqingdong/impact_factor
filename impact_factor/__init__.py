@@ -1,3 +1,6 @@
+"""
+    Impact Factor Toolkits
+"""
 import os
 import sys
 import json
@@ -7,38 +10,32 @@ from functools import partial
 
 from multiprocessing.dummy import Pool as ThreadPool
 
+import colorama
+from simple_loggers import SimpleLogger
+
 from impact_factor import util
 from impact_factor.util.factor import fetch_factor
 from impact_factor.util.journal import parse_journal
-from impact_factor.util.nlmcatalog import get_nlmid
 from impact_factor.db.manager import Manager, Factor, FactorVersion
 
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_DB = os.path.join(BASE_DIR, 'data', 'impact_factor.db')
 
-__version__ = '1.0.5'
-__author__ = 'suqingdong'
-__author_email__ = 'suqingdong@novogene.com'
+version_info = json.load(open(os.path.join(BASE_DIR, 'version', 'version.json')))
+__version__ = version_info['version']
+__author__ = version_info['author']
+__author_email__ = version_info['author_email']
 
-__epilog__ = textwrap.dedent('''
-\x1b[34mexapmles:
-    %(prog)s
-    %(prog)s build -ef /path/to/J_Entrez.gz -mf /path/to/J_Medline.gz -t 32
-    %(prog)s version
-    %(prog)s search Nature
-    %(prog)s search 0028-0836
-    %(prog)s pubmed_filter -min 30
-    %(prog)s pubmed_filter -min 1 -max 2 -o 1_2.txt
 
-\x1b[36mcontact: {__author__} <{__author_email__}>\x1b[0m
-''').format(**locals())
+colorama.init()
 
 
 class ImpactFactor(object):
-    def __init__(self, dbfile=DEFAULT_DB, echo=False, **kwargs):
+    def __init__(self, dbfile=DEFAULT_DB, echo=False, logger=None, **kwargs):
         self.dbfile = dbfile
         self.manager = Manager(dbfile, echo=echo)
+        self.logger = logger or SimpleLogger('ImpactFactor')
 
     def check_version(self):
         context = self.manager.query(FactorVersion)
@@ -46,7 +43,7 @@ class ImpactFactor(object):
         context['total_count'] = res.scalar()
         context['indexed_count'] = res.filter(Factor.indexed == True).scalar()
 
-        print(textwrap.dedent('''
+        self.logger.info(textwrap.dedent('''
             ==========================================================
             program version:\t{__version__}
             database version:\t{version} [{datetime}]
@@ -57,10 +54,9 @@ class ImpactFactor(object):
         ''').format(__version__=__version__, dbfile=self.dbfile, **context))
 
     def search(self, value, field=None, like=True):
-        if field:
-            return self.manager.query(Factor, field, value, like=like)
+        fields = [field] if field else ['issn', 'e_issn', 'journal', 'med_abbr', 'nlm_id']
 
-        for key in ('issn', 'e_issn', 'journal', 'med_abbr', 'nlm_id'):
+        for key in fields:
             context = self.manager.query(Factor, key, value, like=like)
             if context:
                 factor_history = json.loads(context['factor_history'])
@@ -115,7 +111,6 @@ class ImpactFactor(object):
         self.manager.create_table(drop=True)
 
         indexed_ids = {each['nlm_id']: 1 for each in parse_journal(medline_file)}
-        # indexed_ids = {x: 1 for part in get_nlmid(term='currentlyindexed', retstart=0, retmax=500) for x in part}
 
         with util.safe_open(tmpfile) as f:
             for line in f:

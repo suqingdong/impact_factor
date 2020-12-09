@@ -1,3 +1,4 @@
 include requirements.txt
+include impact_factor/version/version.json
 recursive-include impact_factor/data/ *
 exclude test

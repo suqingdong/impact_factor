@@ -1,6 +1,6 @@
 import json
 
-from impact_factor.util.webrequest import WebRequest
+from webrequests import WebRequest
 
 
 BASE_URL = 'http://www.greensci.net/search?kw='
