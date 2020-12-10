@@ -11,7 +11,6 @@ from functools import partial
 from multiprocessing.dummy import Pool as ThreadPool
 
 import click
-import colorama
 
 from impact_factor import util
 from impact_factor.util.factor import fetch_factor
@@ -25,9 +24,6 @@ version_info = json.load(open(os.path.join(BASE_DIR, 'version', 'version.json'))
 __version__ = version_info['version']
 __author__ = version_info['author']
 __author_email__ = version_info['author_email']
-
-
-colorama.init()
 
 
 class ImpactFactor(object):
