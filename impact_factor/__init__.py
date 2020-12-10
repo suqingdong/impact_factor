@@ -10,14 +10,13 @@ from functools import partial
 
 from multiprocessing.dummy import Pool as ThreadPool
 
+import click
 import colorama
-from simple_loggers import SimpleLogger
 
 from impact_factor import util
 from impact_factor.util.factor import fetch_factor
 from impact_factor.util.journal import parse_journal
 from impact_factor.db.manager import Manager, Factor, FactorVersion
-
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_DB = os.path.join(BASE_DIR, 'data', 'impact_factor.db')
@@ -32,10 +31,9 @@ colorama.init()
 
 
 class ImpactFactor(object):
-    def __init__(self, dbfile=DEFAULT_DB, echo=False, logger=None, **kwargs):
+    def __init__(self, dbfile=DEFAULT_DB, echo=False, **kwargs):
         self.dbfile = dbfile
         self.manager = Manager(dbfile, echo=echo)
-        self.logger = logger or SimpleLogger('ImpactFactor')
 
     def check_version(self):
         context = self.manager.query(FactorVersion)
@@ -43,7 +41,7 @@ class ImpactFactor(object):
         context['total_count'] = res.scalar()
         context['indexed_count'] = res.filter(Factor.indexed == True).scalar()
 
-        self.logger.info(textwrap.dedent('''
+        click.secho(textwrap.dedent('''
             ==========================================================
             program version:\t{__version__}
             database version:\t{version} [{datetime}]
@@ -51,7 +49,7 @@ class ImpactFactor(object):
             indexed journals:\t{indexed_count}
             database filepath:\t{dbfile}
             ==========================================================
-        ''').format(__version__=__version__, dbfile=self.dbfile, **context))
+        ''').format(__version__=__version__, dbfile=self.dbfile, **context), fg='green', bold=True)
 
     def search(self, value, field=None, like=True):
         fields = [field] if field else ['issn', 'e_issn', 'journal', 'med_abbr', 'nlm_id']
@@ -122,3 +120,8 @@ class ImpactFactor(object):
                             None,
                             FactorVersion(version=2020, datetime=datetime.datetime.now()))
         self.manager.close()
+
+
+if __name__ == '__main__':
+    IF = ImpactFactor()
+    IF.check_version()
