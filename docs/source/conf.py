@@ -1,8 +1,10 @@
 import os
 import sys
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-PKG_DIR = os.path.dirname(os.path.dirname(BASE_DIR))
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+PKG_DIR = BASE_DIR.parent.parent
 
 print(PKG_DIR)
 

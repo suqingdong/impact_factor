@@ -15,6 +15,10 @@ setup(
     long_description=BASE_DIR.joinpath('README.md').read_text(),
     long_description_content_type='text/markdown',
     url=version_info['url'],
+    project_urls={
+        'Documentation': 'https://impact_factor.readthedocs.io',
+        'Tracker': 'https://github.com/suqingdong/impact_factor/issues',
+    },
     license='MIT License',
     install_requires=BASE_DIR.joinpath('requirements.txt').read_text().strip().split(),
     packages=find_packages(),
