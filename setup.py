@@ -1,29 +1,22 @@
-# -*- encoding: utf8 -*-
-import os
 import json
-import codecs
+from pathlib import Path
 from setuptools import setup, find_packages
 
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-version_info = json.load(open(os.path.join(BASE_DIR, 'impact_factor', 'version', 'version.json')))
-
+BASE_DIR = Path(__file__).resolve().parent
+version_info = json.load(BASE_DIR.joinpath('impact_factor', 'version.json').open())
 
 setup(
-    name='impact_factor',
+    name=version_info['prog'],
     version=version_info['version'],
     author=version_info['author'],
     author_email=version_info['author_email'],
     description=version_info['desc'],
-    long_description=codecs.open(os.path.join(BASE_DIR, 'README.md'), encoding='utf-8').read(),
-    long_description_content_type="text/markdown",
-    url='https://github.com/suqingdong/impact_factor',
-    project_urls={
-        'Documentation': 'https://impact_factor.readthedocs.io',
-        'Tracker': 'https://github.com/suqingdong/impact_factor/issues',
-    },
-    license='BSD License',
-    install_requires=codecs.open(os.path.join(BASE_DIR, 'requirements.txt'), encoding='utf-8').read().split('\n'),
+    long_description=BASE_DIR.joinpath('README.md').read_text(),
+    long_description_content_type='text/markdown',
+    url=version_info['url'],
+    license='MIT License',
+    install_requires=BASE_DIR.joinpath('requirements.txt').read_text().strip().split(),
     packages=find_packages(),
     include_package_data=True,
     entry_points={'console_scripts': [
@@ -34,12 +27,12 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Topic :: Software Development :: Libraries'
     ]
 )

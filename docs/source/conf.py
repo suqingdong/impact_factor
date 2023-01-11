@@ -28,11 +28,11 @@ sys.path.insert(0, PKG_DIR)
 # -- Project information -----------------------------------------------------
 
 project = 'impact_factor'
-copyright = '2020, suqingdong'
+copyright = '2022, suqingdong'
 author = 'suqingdong'
 
 # The full version, including alpha/beta/rc tags
-release = '1.0.0'
+release = '1.1.0'
 
 
 # -- General configuration ---------------------------------------------------

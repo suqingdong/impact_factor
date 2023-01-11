@@ -1,7 +1,7 @@
 *pyc
+*__pycache__
 .vscode
-__pycache__
 build
 dist
-test
+tests
 *.egg-info

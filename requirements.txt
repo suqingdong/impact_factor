@@ -1,4 +1,6 @@
-bs4
+lxml
 click
-requests
-sqlalchemy
+openpyxl
+pygments
+webrequests
+sql_manager
