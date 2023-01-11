@@ -4,7 +4,7 @@ Installation guide
 
 Install with ``pip``::
 
-    pip install impact_factor
+    python3 -m pip install -U impact_factor
 
 Install from `source code`_ ::
 

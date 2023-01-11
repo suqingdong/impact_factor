@@ -5,56 +5,25 @@ Tutorials
 ``build``
 =========
 
-Download NCBI Journals
-----------------------
-
-`NCBI Journal List`_
-
-.. _NCBI Journal List: https://www.ncbi.nlm.nih.gov/books/NBK3827/table/pubmedhelp.T.journal_lists/
-
-download with ``wget``::
-
-    wget -c ftp://ftp.ncbi.nih.gov/pubmed/J_Entrez.gz
-    wget -c ftp://ftp.ncbi.nih.gov/pubmed/J_Medline.gz
-
-.. note::
-    You can also download the journals from browser, or you can speed up with ``ascp``
-
-
-Build the Database
+build the database
 ------------------
 
 .. code:: console
 
-    impact_factor build -ef J_Entrez.gz -mf J_Medline.gz -t 32
+    impact_factor build # default
+
+    impact_factor -d test.db build -i IF.xlsx
 
 .. note::
-    * ``--threads N`` parameter can be used to speed up building
-    * ``--echo`` parameter will show the detail processing of building
+    * ``-d dbfile`` specify a dbfile
+    * ``-i excel``  specify a excel file
 
-
-
-``version``
-===========
-
-Show the informations of database
-
-.. code:: console
-
-    impact_factor version
-
-might shown as follows::
-
-    ==========================================================
-    program version:    1.0.0
-    database version:   2020 [2020-08-20 15:32:34.141140]
-    total journals:     9167
-    indexed journals:   8714
-    database filepath:  /data/work/suqingdong/code/impact_factor/impact_factor/data/impact_factor.db
-    ==========================================================
 
 ``search``
 ==========
+
+search the database
+-------------------
 
 * search with ISSN::
 
@@ -73,40 +42,41 @@ might shown as follows::
     impact_factor search "nature com%"
 
 
-``pubmed_filter``
+``filter``
 =================
+
+filter with factor
+------------------
 
 IF >= 30::
 
-    impact_factor pubmed_filter -min 30
+    impact_factor filter -min 30
     
 IF <= 1::
 
-    impact_factor pubmed_filter -min 1
+    impact_factor filter -min 1
 
 5 <= IF <= 10::
 
-    impact_factor pubmed_filter -min 5 -max 10
+    impact_factor filter -min 5 -max 10
 
-save result to a file::
+output pubmed filter format::
 
-    impact_factor pubmed_filter -min 5 -max 10 -o 5_10.txt
+    impact_factor filter -min 5 -max 10 --pubmed-filter
 
 
 use as a module
 ===============
 .. code:: python
 
-    from impact_factor import ImpactFactor
+    from impact_factor.core import Factor
 
-    IF = ImpactFactor()
+    fa = Factor()
 
-    IF.check_version()
+    print(fa.dbfile)
 
-    IF.search('nature')
+    fa.search('nature')
+    fa.search('nature c%')
 
-    IF.search('nature com%')
-
-    IF.pubmed_filter(min_value=30)
-
-    IF.pubmed_filter(min_value=5, max_value=10)
+    fa.filter(min_value=100, max_value=200)
+    fa.filter(min_value=100, max_value=200, pubmed_filter=True)

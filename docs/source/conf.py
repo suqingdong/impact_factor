@@ -28,7 +28,7 @@ sys.path.insert(0, PKG_DIR)
 # -- Project information -----------------------------------------------------
 
 project = 'impact_factor'
-copyright = '2022, suqingdong'
+copyright = '2023, suqingdong'
 author = 'suqingdong'
 
 # The full version, including alpha/beta/rc tags

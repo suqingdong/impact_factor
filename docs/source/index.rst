@@ -3,7 +3,7 @@
 ====================================
 ImpactFactor |version| Documentation
 ====================================
-ImpactFactor is a Impact Factor Toolkits, which contains ``build``, ``version``, ``search``, ``pubmed_filter`` 
+ImpactFactor is a Impact Factor Toolkits, which contains ``build``, ``search``, ``filter`` 
 sub-commands. You can search the IF of a journal, and you can generate a pubmed filter for NCBI Pubmed.
 
 Installation Guide
