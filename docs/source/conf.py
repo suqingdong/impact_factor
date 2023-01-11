@@ -1,14 +1,13 @@
-import os
 import sys
-
 from pathlib import Path
+
 
 BASE_DIR = Path(__file__).resolve().parent
 PKG_DIR = BASE_DIR.parent.parent
 
-print(PKG_DIR)
+print('PKG_DIR:', PKG_DIR)
 
-sys.path.insert(0, PKG_DIR)
+sys.path.insert(0, str(PKG_DIR))
 
 # Configuration file for the Sphinx documentation builder.
 #
