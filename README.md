@@ -5,7 +5,9 @@
 ![PyPI - Status](https://img.shields.io/pypi/status/impact_factor)
 
 
-# Impact Factor Toolkits
+# ***最新SCI期刊影响因子查询系统***
+- *已更新2022年数据*
+- *包含JCR分区表数据*
 
 ## Installation
 ```bash
@@ -24,7 +26,11 @@ impact_factor -h
 > build/update the database
 ```bash
 # optional, only required when you need build or update the database
-IF build
+impact_factor build
+
+# with api_key
+NCBI_API_KEY=xxxxxxx impact_factor build
+# or export NCBI_API_KEY=xxxxxxx
 ```
 
 ### `search`

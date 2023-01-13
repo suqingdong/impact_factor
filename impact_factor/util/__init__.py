@@ -28,7 +28,8 @@ def record_to_dict(records):
 
 def pubmed_filter_builder(records):
     res = '|'.join(
-        record.issn or record.eissn
+        # f'{record.nlm_id}[Journal]'
+        record.issn
         for record in records
         if record.nlm_id
     )

@@ -43,7 +43,7 @@ class Factor(object):
 
         return []
 
-    def filter(self, min_value=None, max_value=None, pubmed_filter=False, **kwargs):
+    def filter(self, min_value=None, max_value=None, pubmed_filter=False, limit=None, **kwargs):
         """
             filter factor
         """
@@ -54,6 +54,10 @@ class Factor(object):
 
         if max_value is not None:
             query = query.filter(FactorData.factor <= max_value)
+
+        if limit and (count := query.count()) > limit:
+            self.manager.logger.warning(f'{count} records found, but limit is {limit}')
+            query = query.limit(limit)
 
         if pubmed_filter:
             return util.pubmed_filter_builder(query)

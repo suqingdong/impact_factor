@@ -16,6 +16,7 @@ def parse_excel(infile):
     """
     wb = openpyxl.load_workbook(infile)
     ws = wb.active
+
     for values in ws.values:
         if values[0] is None:
             continue
