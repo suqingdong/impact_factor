@@ -22,6 +22,7 @@ impact_factor -h
 
 ### `build`
 > build/update the database
+
 ```bash
 # optional, only required when you need build or update the database
 impact_factor build
@@ -32,6 +33,7 @@ impact_factor build -k YOUR_NCBI_API_KEY
 
 ### `search`
 > search with `journal`, `journal_abbr`, `issn`, `eissn` or `nlm_id`
+
 ```bash
 impact_factor search nature         # search journal
 impact_factor search 'nature c%'    # like search journal
@@ -45,6 +47,7 @@ impact_factor search nature --color # colorful output
 
 ### `filter`
 > filter `factor` with `min_value` and `max_value`
+
 ```bash
 impact_factor filter -m 100 -M 200 --color
 
