@@ -18,6 +18,7 @@ python3 -m pip -U install impact_factor
 ```bash
 impact_factor -h
 ```
+![](https://suqingdong.github.io/impact_factor/src/help.png)
 
 ### `build`
 > build/update the database
@@ -25,10 +26,8 @@ impact_factor -h
 # optional, only required when you need build or update the database
 impact_factor build
 
-# use your api_key
-export NCBI_API_KEY=xxxxxxx  # Unix
-set NCBI_API_KEY=xxxxxxx     # Windows
-impact_factor build
+# with api_key
+impact_factor build -k YOUR_NCBI_API_KEY
 ```
 
 ### `search`
@@ -42,6 +41,8 @@ impact_factor search 0410462        # search nlm_id
 impact_factor search nature --color # colorful output
 ```
 
+![](https://suqingdong.github.io/impact_factor/src/search.png)
+
 ### `filter`
 > filter `factor` with `min_value` and `max_value`
 ```bash
@@ -50,6 +51,8 @@ impact_factor filter -m 100 -M 200 --color
 # output with pubmed filter format
 impact_factor filter -m 100 -M 200 --pubmed-filter
 ```
+
+![](https://suqingdong.github.io/impact_factor/src/filter.png)
 
 ## Use in Python
 ```python
