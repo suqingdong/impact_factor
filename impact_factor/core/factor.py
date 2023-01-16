@@ -45,7 +45,7 @@ class Factor(object):
 
     def filter(self, min_value=None, max_value=None, pubmed_filter=False, limit=None, **kwargs):
         """
-            filter factor
+            filter factor, or generate pubmed filter
         """
         query = self.query
 

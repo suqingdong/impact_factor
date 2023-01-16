@@ -15,10 +15,7 @@ python3 -m pip -U install impact_factor
 ```
 
 ## Use in CMD
-### `help`
 ```bash
-IF -h
-# or
 impact_factor -h
 ```
 
@@ -28,29 +25,30 @@ impact_factor -h
 # optional, only required when you need build or update the database
 impact_factor build
 
-# with api_key
-NCBI_API_KEY=xxxxxxx impact_factor build
-# or export NCBI_API_KEY=xxxxxxx
+# use your api_key
+export NCBI_API_KEY=xxxxxxx  # Unix
+set NCBI_API_KEY=xxxxxxx     # Windows
+impact_factor build
 ```
 
 ### `search`
 > search with `journal`, `journal_abbr`, `issn`, `eissn` or `nlm_id`
 ```bash
-IF search nature         # search journal
-IF search 'nature c%'    # like search journal
-IF search 0028-0836      # search ISSN
-IF search 1476-4687      # search eISSN
-IF search 0410462        # search nlm_id
-IF search nature --color # colorful output
+impact_factor search nature         # search journal
+impact_factor search 'nature c%'    # like search journal
+impact_factor search 0028-0836      # search ISSN
+impact_factor search 1476-4687      # search eISSN
+impact_factor search 0410462        # search nlm_id
+impact_factor search nature --color # colorful output
 ```
 
 ### `filter`
 > filter `factor` with `min_value` and `max_value`
 ```bash
-IF filter -m 100 -M 200 --color
+impact_factor filter -m 100 -M 200 --color
 
 # output with pubmed filter format
-IF filter -m 100 -M 200 --pubmed-filter
+impact_factor filter -m 100 -M 200 --pubmed-filter
 ```
 
 ## Use in Python

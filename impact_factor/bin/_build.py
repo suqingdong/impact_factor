@@ -1,4 +1,4 @@
-from pathlib import Path
+import os
 
 import click
 
@@ -6,20 +6,38 @@ from impact_factor import util, DEFAULT_EXCEL
 from impact_factor.core import NlmCatalog
 
 
+EPILOG = click.style('''
+\n\b
+examples:
+    impact_factor build
+\b
+    # with api_key
+    impact_factor build -k YOUR_NCBI_API_KEY
+
+''', fg='yellow', italic=True)
+
+
 @click.command(
     name='build',
     help=click.style('build/update the database', italic=True, fg='green'),
+    no_args_is_help=True,
+    epilog=EPILOG,
 )
 @click.option('-i', '--excel', help='the excel file with IF', default=DEFAULT_EXCEL, show_default=True)
 @click.option('-u', '--update', help='update all records', is_flag=True)
 @click.option('-f', '--force', help='force update when database already exists', is_flag=True)
+@click.option('-k', '--ncbi_api_key', help='specify a NCBI_API_KEY', envvar='NCBI_API_KEY', show_envvar=True)
 @click.pass_context
 def main(ctx, **kwargs):
 
-    with ctx.obj['manager'] as manager:
 
-        if Path(ctx.obj['dbfile']).exists() and not kwargs['force']:
-            overwrite = click.confirm('db already exists, overwrite?')
+    with ctx.obj['manager'] as manager:
+        if (key := kwargs['ncbi_api_key']):
+            NlmCatalog._api_key = key
+
+        if manager.query().count() > 0 and not kwargs['force']:
+            dbfile = ctx.obj['dbfile']
+            overwrite = click.confirm(f'db already exists, overwrite? [{dbfile}]')
             if not overwrite:
                 exit()
 

@@ -1,15 +1,18 @@
+import os
 import click
 
 from impact_factor import version_info, DEFAULT_DB
 from impact_factor.core import FactorManager
 from impact_factor.bin._build import main as build_cli
-from impact_factor.bin._query import main as search_cli
+from impact_factor.bin._search import main as search_cli
 from impact_factor.bin._filter import main as filter_cli
 
 
 EPILOG = 'contact: {author} <{author_email}>'.format(**version_info)
 
 CONTEXT_SETTINGS = dict(help_option_names=['-?', '-h', '--help'])
+
+
 @click.group(
     name=version_info['prog'],
     help=click.style(version_info['desc'], italic=True, fg='cyan', bold=True),
