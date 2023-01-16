@@ -1,4 +1,5 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4005636.svg)](https://doi.org/10.5281/zenodo.4005636)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7539859.svg)](https://doi.org/10.5281/zenodo.7539859)
+
 [![Downloads](https://pepy.tech/badge/impact-factor)](https://pepy.tech/project/impact-factor)
 ![PyPI - License](https://img.shields.io/pypi/l/mi?style=plastic)
 ![PyPI](https://img.shields.io/pypi/v/impact_factor)
