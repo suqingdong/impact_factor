@@ -12,7 +12,7 @@
 
 ## Installation
 ```bash
-python3 -m pip -U install impact_factor
+python3 -m pip install -U impact_factor
 ```
 
 ## Use in CMD
