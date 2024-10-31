@@ -1,4 +1,6 @@
 import os
+import time
+
 from webrequests import WebRequest as WR
 
 try:
@@ -30,21 +32,27 @@ class NlmCatalog(object):
             'term': term,
             'format': 'json',
         }
-        result = WR.get_response(url, params=payload).json()['esearchresult']
 
-        if (count := result['count']) != '1':
-            print(f'{term} has {count} result!')
-            return False
+        while True:
+            try:
+                result = WR.get_response(url, params=payload).json()['esearchresult']
 
-        nlm_id = result['idlist'][0]
-        xml = cls.fetch(nlm_id)
-        tree = cls.parse(xml)
+                if (count := result['count']) != '1':
+                    print(f'{term} has {count} result!')
+                    return False
 
-        context = {}
-        context['nlm_id'] = nlm_id
-        context['journal_abbr'] = tree.findtext('NLMCatalogRecord/MedlineTA')
-        
-        return context
+                nlm_id = result['idlist'][0]
+                xml = cls.fetch(nlm_id)
+                tree = cls.parse(xml)
+
+                context = {}
+                context['nlm_id'] = nlm_id
+                context['journal_abbr'] = tree.findtext('NLMCatalogRecord/MedlineTA')
+                
+                return context
+            except Exception as e:
+                print(e)
+                time.sleep(5)
 
     @classmethod
     def fetch(cls, id):

@@ -7,7 +7,7 @@
 
 
 # ***最新SCI期刊影响因子查询系统***
-- *已更新2022年数据*
+- *已更新 **[2024年数据](https://www.researchgate.net/publication/381580823_Journal_Citation_Reports_JCR_Impact_Factor_2024_PDF_Web_of_Science)***
 - *包含JCR分区表数据*
 
 ## Installation
@@ -26,10 +26,16 @@ impact_factor -h
 
 ```bash
 # optional, only required when you need build or update the database
-impact_factor build
+impact_factor build -i tests/IF.xlsx
 
-# with api_key
+# with a ncbi api_key
 impact_factor build -k YOUR_NCBI_API_KEY
+
+# use a new dbfile [*recommend*]
+impact_factor -d test.db build -i tests/IF.xlsx
+
+# without nlm_catalog
+impact_factor -d test.db build -i tests/IF.xlsx -n
 ```
 
 ### `search`
