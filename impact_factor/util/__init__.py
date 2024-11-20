@@ -26,12 +26,10 @@ def record_to_dict(records):
     }
 
 
-def pubmed_filter_builder(records):
+def pubmed_filter_builder(query):
     res = '|'.join(
-        # f'{record.nlm_id}[Journal]'
         record.issn
-        for record in records
-        if record.nlm_id
+        for record in query
     )
     if (length := len(res)) > 4000:
         raise Exception(

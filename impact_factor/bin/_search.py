@@ -31,7 +31,7 @@ def main(ctx, **kwargs):
 
     fa = Factor(ctx.obj['dbfile'])
 
-    res = fa.search(kwargs['value'])
+    res = fa.search(kwargs['value'], key=kwargs['field'])
 
     if kwargs['color']:
         res = util.highlight_json(json.dumps(res, indent=2))

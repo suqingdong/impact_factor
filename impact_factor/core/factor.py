@@ -55,11 +55,12 @@ class Factor(object):
         if max_value is not None:
             query = query.filter(FactorData.factor <= max_value)
 
+        if pubmed_filter:
+            query = query.filter(FactorData.nlm_id != '.', FactorData.factor != 0)
+            return util.pubmed_filter_builder(query)
+        
         if limit and (count := query.count()) > limit:
             self.manager.logger.warning(f'{count} records found, but limit is {limit}')
             query = query.limit(limit)
-
-        if pubmed_filter:
-            return util.pubmed_filter_builder(query)
-        else:
-            return [util.record_to_dict(record) for record in query]
+    
+        return [util.record_to_dict(record) for record in query]
