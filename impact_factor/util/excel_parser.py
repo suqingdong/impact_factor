@@ -13,6 +13,8 @@ def get_jcr(category):
 def parse_excel(infile):
     """
         parse excel file of JCR IF
+
+        fields: JIF, ISSN, EISSN, JCR, ZKY, JOURNAL, JOURNAL_ABBR
     """
     wb = openpyxl.load_workbook(infile)
     ws = wb.active
@@ -20,16 +22,18 @@ def parse_excel(infile):
     for values in ws.values:
         if values[0] is None:
             continue
-        if values[0] in ('Journal Name', 'Name'):
+        if values[0] in ('JOURNAL', 'Journal Name', 'Name'):
             title = [v.upper() for v in values]
             continue
         context = dict(zip(title, values))
         data = {}
-        data['factor'] = context.get('2021 JIF') or context.get('JIF')
-        data['issn'] = context['ISSN'] if context['ISSN'] != 'N/A' else ''
-        data['eissn'] = context['EISSN'] if context['EISSN'] != 'N/A' else ''
-        data['jcr'] = get_jcr(context['CATEGORY'])
-        data['journal'] = context.get('JOURNAL NAME') or context.get('NAME')
+        data['factor'] = context['JIF']
+        data['issn'] = context['ISSN']
+        data['eissn'] = context['EISSN']
+        data['journal'] = context['JOURNAL']
+        data['jcr'] = context.get('JCR')
+        data['zky'] = context.get('ZKY')
+        data['journal_abbr'] = context.get('JOURNAL_ABBR')
 
         yield data
 

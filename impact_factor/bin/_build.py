@@ -46,7 +46,8 @@ def main(ctx, **kwargs):
             if not overwrite:
                 exit()
 
-        for context in util.parse_excel(kwargs['excel']):
+        for n, context in enumerate(util.parse_excel(kwargs['excel'])):
+            click.secho(f'>>> dealing with: [{n}]')
             issn = context['issn']
             eissn = context['eissn']
             journal = context['journal']

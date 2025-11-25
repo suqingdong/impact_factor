@@ -7,8 +7,9 @@
 
 
 # ***最新SCI期刊影响因子查询系统***
-- *已更新 **[2024年数据](https://www.researchgate.net/publication/381580823_Journal_Citation_Reports_JCR_Impact_Factor_2024_PDF_Web_of_Science)***
+- *已更新 **2025年数据***
 - *包含JCR分区表数据*
+- *包含中科院分区表数据*
 
 ## Installation
 ```bash

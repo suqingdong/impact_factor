@@ -12,6 +12,7 @@ columns = {
     'journal_abbr': Column(String, comment='the abbreviation of journal', default='.'),
     'issn': Column(String, comment='the ISSN of journal', default='.'),
     'eissn': Column(String, comment='the eISSN of journal', default='.'),
+    'zky': Column(String, comment='the partition of ZKY', default='.'),
 }
 
 FactorData = DynamicModel('Factor', columns, 'factor')
